@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <title>Fun Games</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Fun Games</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Scramble Words<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Memory Game</a>
+                    </li>
+            </div>
+        </div>
+
+    </nav>
+    <div class="container-fluid" id="app">
+        <div class="row">
+            <div class="col-sm">
+                <h1 class="text-center">Guess the Word!</h1>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                <img src="assets/scramble/images/HH1.jpg" class="image-box" />
+                <img src="assets/scramble/images/HH2.jpg" class="image-box" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                <img src="assets/scramble/images/HH3.jpg" class="image-box" />
+                <img src="assets/scramble/images/HH4.jpg" class="image-box" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                <h2 class="text-uppercase font-weight-bold text-monospace">{{ shuffled }}</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 offset-sm-3 offset-lg-4 text-center text-2">
+                <div class="row">
+                    <div class="col-sm-11">
+                            <input type="text" class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary" 
+                                id="txtAnswer" placeholder="" v-model="answer" v-on:keyup="checkAnswer" v-focus>
+                    </div>
+                    <div class="col-sm-1">
+                        <span id="b-continue" class="badge badge-primary" v-if="status == 2"><i class="fas fa-spinner fa-spin"></i></span>
+                        <span id="b-wrong" class="badge badge-danger" v-if="status == 0"><i class="fas fa-times-circle"></i></span>
+                        <span id="b-correct" class="badge badge-success" v-if="status == 1"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+    </div>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

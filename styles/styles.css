@@ -1,0 +1,13 @@
+.image-box {
+    height: 200px;
+    width: 200px;
+}
+
+.text-2 {
+    font-size: 2em;
+}
+
+.text-inherit {
+    font-size:inherit;
+}
+
