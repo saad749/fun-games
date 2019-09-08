@@ -4,12 +4,16 @@ var words = [
     { word: 'risk management', shuffled: shuffle('risk management'), images: "HH"}, 
     ];
 
+
+Vue.prototype.$wordIndex = Math.random() * (words.length - 0) + 0;
+
 var app = new Vue({
     el: '#app',
     data: {
+        
         status: 2,
-        actual: words[0].word,
-        shuffled: words[0].shuffled,
+        actual: words[this.$wordIndex].word,
+        shuffled: words[this.$wordIndex].shuffled,
         answer: ''
 
     },
