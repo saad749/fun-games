@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Scramble Words<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Scramble<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Memory Game</a>
@@ -40,6 +40,22 @@
         <div class="row">
             <div class="col-sm">
                 <h1 class="text-center">Guess the Word!</h1>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 offset-sm-3 offset-lg-4 text-center text-2">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <input type="text"
+                            class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
+                            ref="txtName" placeholder="Enter your Name" v-model="playerName" v-focus
+                            :disabled="gameOn == 1">
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-primary" v-on:click="startGame" :disabled="gameOn == 1">Go!</button>
+                    </div>
+                </div>
             </div>
         </div>
         <br />
@@ -66,24 +82,76 @@
             <div class="col-sm-6 col-lg-4 offset-sm-3 offset-lg-4 text-center text-2">
                 <div class="row">
                     <div class="col-sm-11">
-                            <input type="text" class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary" 
-                                ref="txtAnswer" placeholder="" v-model="answer" v-on:keyup="checkAnswer" v-focus>
+                        <input type="text"
+                            class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
+                            ref="txtAnswer" placeholder="" v-model="answer" v-on:keyup="checkAnswer"
+                            :disabled="gameOn == 0">
                     </div>
                     <div class="col-sm-1">
-                        <span class="badge badge-primary" v-if="status == 2"><i class="fas fa-spinner fa-spin"></i></span>
+                        <span class="badge badge-primary" v-if="status == 2"><i
+                                class="fas fa-spinner fa-spin"></i></span>
                         <span class="badge badge-danger" v-if="status == 0"><i class="fas fa-times-circle"></i></span>
                         <span class="badge badge-success" v-if="status == 1"><i class="fas fa-check-circle"></i></span>
                     </div>
                 </div>
             </div>
-            
         </div>
         <br />
         <div class="row">
             <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
-                <button class="btn btn-primary" v-on:click="getNextWord">Next Word</button>   
+                <div id="clock">
+                    <span class="time">{{ time }}</span>
+                </div>
             </div>
         </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                <button class="btn btn-warning" v-on:click="getNextWord" :disabled="status == 1">Skip Word</button>
+                <button class="btn btn-info" v-on:click="resetGame" :disabled="status == 1">Reset</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                <h3>Highest Scores</h3>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for='(score, index) in highestScores'>
+                            <th scope="row">{{ index + 1 }}</th>
+                            <td>{{ score.playerName.toUpperCase() }}</td>
+                            <td>{{ score.playerScore }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Toasts-->
+        <!-- <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;"> -->
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1500"
+            style="position: absolute; top: 40vh; right: 41vw;">
+            <div class="toast-header bg-success text-white text-2 text-center">
+                <strong class="mr-auto">Congratulations!!</strong>
+                <small></small>
+                <!-- <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="toast-body font-weight-bold text-2 text-center">
+                You guessed it correct!
+            </div>
+        </div>
+        <!-- </div> -->
+
+
     </div>
 
 
@@ -95,6 +163,7 @@
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/lodash/lodash.min.js"></script>
     <script src="index.js"></script>
 </body>
 
