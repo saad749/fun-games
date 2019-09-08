@@ -45,14 +45,14 @@
         <br />
         <div class="row">
             <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
-                <img src="assets/scramble/images/HH1.jpg" class="image-box" />
-                <img src="assets/scramble/images/HH2.jpg" class="image-box" />
+                <img v-bind:src="'assets/scramble/images/' + imagePrefix + '1.jpg'" class="image-box" />
+                <img v-bind:src="'assets/scramble/images/' + imagePrefix + '2.jpg'" class="image-box" />
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
-                <img src="assets/scramble/images/HH3.jpg" class="image-box" />
-                <img src="assets/scramble/images/HH4.jpg" class="image-box" />
+                <img v-bind:src="'assets/scramble/images/' + imagePrefix + '3.jpg'" class="image-box" />
+                <img v-bind:src="'assets/scramble/images/' + imagePrefix + '4.jpg'" class="image-box" />
             </div>
         </div>
         <br />
@@ -67,16 +67,22 @@
                 <div class="row">
                     <div class="col-sm-11">
                             <input type="text" class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary" 
-                                id="txtAnswer" placeholder="" v-model="answer" v-on:keyup="checkAnswer" v-focus>
+                                ref="txtAnswer" placeholder="" v-model="answer" v-on:keyup="checkAnswer" v-focus>
                     </div>
                     <div class="col-sm-1">
-                        <span id="b-continue" class="badge badge-primary" v-if="status == 2"><i class="fas fa-spinner fa-spin"></i></span>
-                        <span id="b-wrong" class="badge badge-danger" v-if="status == 0"><i class="fas fa-times-circle"></i></span>
-                        <span id="b-correct" class="badge badge-success" v-if="status == 1"><i class="fas fa-check-circle"></i></span>
+                        <span class="badge badge-primary" v-if="status == 2"><i class="fas fa-spinner fa-spin"></i></span>
+                        <span class="badge badge-danger" v-if="status == 0"><i class="fas fa-times-circle"></i></span>
+                        <span class="badge badge-success" v-if="status == 1"><i class="fas fa-check-circle"></i></span>
                     </div>
                 </div>
             </div>
             
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                <button class="btn btn-primary" v-on:click="getNextWord">Next Word</button>   
+            </div>
         </div>
     </div>
 
