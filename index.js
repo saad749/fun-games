@@ -1,7 +1,12 @@
 var words = [
     { word: 'hand hygiene', shuffled: shuffle('hand hygiene'), imagePrefix: "HH" },
     { word: 'patient safety', shuffled: shuffle('patient safety'), imagePrefix: "PS" },
-    { word: 'risk management', shuffled: shuffle('risk management'), imagePrefix: "RM" },
+    { word: 'patient centered care', shuffled: shuffle('patient centered care'), imagePrefix: "PCC" },
+    { word: 'disclosure', shuffled: shuffle('disclosure'), imagePrefix: "DS" },
+    { word: 'Medication Reconciliation', shuffled: shuffle('Medication Reconciliation'), imagePrefix: "MR" },
+    { word: 'patient identification', shuffled: shuffle('patient identification'), imagePrefix: "PI" }
+    // { word: '', shuffled: shuffle(''), imagePrefix: "" },
+    
 ];
 
 
@@ -78,7 +83,7 @@ var app = new Vue({
             var existingScores = JSON.parse(localStorage.getItem("highestScores"));
             if (existingScores == null)
                 existingScores = [];
-            this.playerScore =  (this.playerScore * 500) / this.playDuration;
+            this.playerScore =  Math.floor((this.playerScore * 500) / this.playDuration);
             existingScores.push({ playerName: this.playerName, playerScore: this.playerScore});
             localStorage.setItem('highestScores', JSON.stringify(existingScores));
 
