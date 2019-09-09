@@ -3,6 +3,9 @@
 	width: 150px;
 }
 
+.text-inherit {
+	font-size: inherit;
+}
 .text-2 {
 	font-size: 1.5em;
 }
@@ -11,9 +14,7 @@
 	font-size: 1em;
 }
 
-.text-inherit {
-	font-size: inherit;
-}
+
 
 #clock {
 	order: 0;

@@ -43,15 +43,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-lg-4 offset-sm-3 offset-lg-4 text-center text-2">
+            <div class="col-md-6 col-lg-4 offset-md-3 offset-lg-4 text-center text-2">
                 <div class="row">
-                    <div class="col-sm-11">
+                    <div class="col-10 col-lg-11">
                         <input type="text"
                             class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
                             ref="txtName" placeholder="Enter your Name" v-model="playerName" v-focus
                             :disabled="gameOn == 1">
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-2 col-lg-1">
                         <button class="btn btn-primary" v-on:click="startGame" :disabled="gameOn == 1">Go!</button>
                     </div>
                 </div>
@@ -59,20 +59,20 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+            <div class="col-12 col-lg-6 offset-lg-3 text-center">
                 <img v-bind:src="'assets/scramble/images/' + imagePrefix + '1.jpg'" class="image-box" />
                 <img v-bind:src="'assets/scramble/images/' + imagePrefix + '2.jpg'" class="image-box" />
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+            <div class="col-12 col-lg-6 offset-lg-3 text-center">
                 <img v-bind:src="'assets/scramble/images/' + imagePrefix + '3.jpg'" class="image-box" />
                 <img v-bind:src="'assets/scramble/images/' + imagePrefix + '4.jpg'" class="image-box" />
             </div>
         </div>
         <br />
         <div class="row">
-            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+            <div class="col-12 col-lg-6 offset-lg-3 text-center">
                 <h3 class="text-uppercase font-weight-bold text-monospace">{{ shuffled }}</h3>
             </div>
         </div>
@@ -80,13 +80,13 @@
         <div class="row">
             <div class="col-sm-6 col-lg-4 offset-sm-3 offset-lg-4 text-center text-2">
                 <div class="row">
-                    <div class="col-sm-11">
+                    <div class="col-10 col-sm-11">
                         <input type="text"
                             class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
                             ref="txtAnswer" placeholder="" v-model="answer" v-on:keyup="checkAnswer"
                             :disabled="gameOn == 0">
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-2 col-sm-1">
                         <span class="badge badge-primary" v-if="status == 2"><i
                                 class="fas fa-spinner fa-spin"></i></span>
                         <span class="badge badge-danger" v-if="status == 0"><i class="fas fa-times-circle"></i></span>
