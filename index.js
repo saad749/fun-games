@@ -4,7 +4,10 @@ var words = [
     { word: 'patient centered care', shuffled: shuffle('patient centered care'), imagePrefix: "PCC" },
     { word: 'disclosure', shuffled: shuffle('disclosure'), imagePrefix: "DS" },
     { word: 'Medication Reconciliation', shuffled: shuffle('Medication Reconciliation'), imagePrefix: "MR" },
-    { word: 'patient identification', shuffled: shuffle('patient identification'), imagePrefix: "PI" }
+    { word: 'patient identification', shuffled: shuffle('patient identification'), imagePrefix: "PI" },
+    { word: 'fall prevention', shuffled: shuffle('fall prevention'), imagePrefix: "FP" },
+    { word: 'safety culture', shuffled: shuffle('safety culture'), imagePrefix: "SC" },
+    { word: 'alert fatigue', shuffled: shuffle('alert fatigue'), imagePrefix: "AF" }
     // { word: '', shuffled: shuffle(''), imagePrefix: "" },
     
 ];
