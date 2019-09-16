@@ -47,7 +47,6 @@ var app = new Vue({
     methods: {
         checkAnswer: function () {
             //console.log('event fired!', this.answer.toLowerCase(), this.actual.toLowerCase(), this.answer.length, this.actual.length);
-
             if (this.answer.toLowerCase() == this.actual.toLowerCase()) {
                 this.hold = 1;
                 this.status = 1;
