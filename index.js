@@ -90,6 +90,8 @@ var app = new Vue({
             this.$refs.txtAnswer.focus();
         },
         startGame: function () {
+            if(this.playerName.length == 0)
+                return;
             this.hold = 0;
             this.gameOn = 1;
             this.$nextTick(() => this.$refs.txtAnswer.focus()) //sometimes the element is not directly available
