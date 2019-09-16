@@ -48,7 +48,7 @@
                     <div class="col-12">
                         <input type="text"
                             class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
-                            ref="txtName" placeholder="Enter your Name" v-model="playerName" v-focus v-on:keyup.enter="startGame"
+                            ref="txtName" placeholder="Enter your Name" v-model="playerName" v-focus v-on:keyup.enter="startGame" v-on:blur="startGame"
                             >
                     </div>
                     <!-- <div class="col-2 col-lg-1">
@@ -89,7 +89,7 @@
                     <div class="col-10 col-md-11">
                         <input type="text"
                             class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
-                            ref="txtAnswer" placeholder="" v-model="answer" v-on:input="checkAnswer()"
+                            ref="txtAnswer" placeholder="" v-model="answer" v-on:input="checkAnswer()" v-on:blur="checkAnswer()"
                             :disabled="gameOn == 0 || hold == 1">
                     </div>
                     <div class="col-2 col-md-1">
