@@ -16,7 +16,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Fun Games</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -35,24 +35,30 @@
             </div>
         </div>
 
-    </nav>
+    </nav> -->
     <div class="container-fluid" id="app">
         <div class="row">
             <div class="col-sm">
-                <h3 class="text-center">Guess the Word!</h3>
+                <h1 class="text-center">Guess the Word!</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-lg-4 offset-md-3 offset-lg-4 text-center text-2">
-                <div class="row">
-                    <div class="col-10 col-lg-11">
+                <div class="row" v-show="gameOn != 1">
+                    <div class="col-12">
                         <input type="text"
                             class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
-                            ref="txtName" placeholder="Enter your Name" v-model="playerName" v-focus
-                            :disabled="gameOn == 1">
+                            ref="txtName" placeholder="Enter your Name" v-model="playerName" v-focus v-on:keyup.enter="startGame"
+                            >
                     </div>
-                    <div class="col-2 col-lg-1">
+                    <!-- <div class="col-2 col-lg-1">
                         <button class="btn btn-primary" v-on:click="startGame" :disabled="gameOn == 1">Go!</button>
+                    </div> -->
+                </div>
+                <div class="row" v-show="gameOn == 1">
+                    <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+                        <button class="btn btn-warning" v-on:click="getNextWord" :disabled="status == 1">Skip Word</button>
+                        <button class="btn btn-info" v-on:click="resetGame" :disabled="status == 1">Reset</button>
                     </div>
                 </div>
             </div>
@@ -80,13 +86,13 @@
         <div class="row">
             <div class="col-sm-6 col-lg-4 offset-sm-3 offset-lg-4 text-center text-2">
                 <div class="row">
-                    <div class="col-10 col-sm-11">
+                    <div class="col-10 col-md-11">
                         <input type="text"
                             class="form-control text-uppercase font-weight-bold text-monospace text-inherit text-center border border-primary"
                             ref="txtAnswer" placeholder="" v-model="answer" v-on:input="checkAnswer()"
-                            :disabled="gameOn == 0">
+                            :disabled="gameOn == 0 || hold == 1">
                     </div>
-                    <div class="col-2 col-sm-1">
+                    <div class="col-2 col-md-1">
                         <span class="badge badge-primary" v-if="status == 2"><i
                                 class="fas fa-spinner fa-spin"></i></span>
                         <span class="badge badge-danger" v-if="status == 0"><i class="fas fa-times-circle"></i></span>
@@ -95,11 +101,11 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 text-center">
                 <button class="btn btn-sm btn-primary ">Check!</button>
             </div>
-        </div>
+        </div> -->
         <br />
         <div class="row">
             <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
@@ -110,21 +116,14 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
-                <button class="btn btn-warning" v-on:click="getNextWord" :disabled="status == 1">Skip Word</button>
-                <button class="btn btn-info" v-on:click="resetGame" :disabled="status == 1">Reset</button>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-sm-12 col-lg-6 offset-lg-3 text-center">
+            <div class="col-sm-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 text-center">
                 <h3>Highest Scores</h3>
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped table-sm">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Score</th>
+                            <th scope="col" class="col-2">#</th>
+                            <th scope="col" class="col-5">Name</th>
+                            <th scope="col" class="col-5">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,22 +139,20 @@
 
         <!-- Toasts-->
         <!-- <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;"> -->
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1500"
-            style="position: absolute; top: 40vh; right: 41vw;">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500"
+            style="position: absolute; top: 35vh; right: 41vw;">
             <div class="toast-header bg-success text-white text-2 text-center">
-                <strong class="mr-auto">Congratulations!!</strong>
+                <strong class="mr-auto">
+                    <span v-if="gameOver == 0">Congratulations!!</span>
+                    <span v-if="gameOver == 1">Game Over!!</span>
+                </strong>
                 <small></small>
-                <!-- <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
             </div>
-            <div class="toast-body font-weight-bold text-2 text-center">
-                You guessed it correct!
+            <div class="toast-body font-weight-bold text-2 text-center bg-white">
+                <span v-if="gameOver == 0">You guessed it correct!</span>
+                <span v-if="gameOver == 1">Congratulations!! Your score is: {{ Math.floor(playerScore) }}</span>
             </div>
         </div>
-        <!-- </div> -->
-
-
     </div>
 
 
@@ -164,7 +161,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="lib/jquery.slim.min.js"></script>
-    <script src="lib/umd/popper.min.js"></script>
+    <script src="lib/popper.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/vue.min.js"></script>
     <script src="lib/lodash.min.js"></script>

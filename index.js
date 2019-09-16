@@ -23,7 +23,7 @@ var app = new Vue({
         status: 2,
         actual: words[0].word,
         shuffled: words[0].shuffled,
-        imagePrefix: 'HH',
+        imagePrefix: words[0].imagePrefix,
         answer: '',
         highestScores: [],
         time: '00:00:00.000',
@@ -32,7 +32,9 @@ var app = new Vue({
         stoppedDuration: 0,
         started: null,
         running: false,
-        playDuration: 0
+        playDuration: 0,
+        hold: 1, // to disable input between transition of words
+        gameOver: 0
     },
     computed: {
 
@@ -47,46 +49,60 @@ var app = new Vue({
             //console.log('event fired!', this.answer.toLowerCase(), this.actual.toLowerCase(), this.answer.length, this.actual.length);
 
             if (this.answer.toLowerCase() == this.actual.toLowerCase()) {
+                this.hold = 1;
                 this.status = 1;
-                // May be show some pop up and continue to next word!
                 this.playerScore++;
-                //$('.toast').toast({delay: 2000});
-                $('.toast').toast('show');
-                setTimeout(() => this.getNextWord(), 2000);
-
+                if (this.wordIndex + 1 < words.length) {
+                    $('.toast').toast('show'); //show some pop up and continue to next word!
+                    setTimeout(() => this.getNextWord(), 2500);
+                }
+                else {
+                    this.getNextWord();
+                }
+                
+                return;
             }
-            else if (this.answer.length >= this.actual.length) {
-                this.status = 0;
-            }
-            else {
-                this.status = 2;
+            this.status = 2;
+            for(var i=0; i < this.answer.length; i++) {
+                if(this.answer[i] != this.actual[i])
+                    this.status = 0
             }
         },
         getNextWord: function () {
             //            this.wordIndex = Math.floor(Math.random() * (words.length - 1) + 1);
             this.answer = '';
+            if(this.status != 1 && this.playerScore > 0){
+                this.playerScore -= 0.5;
+
+            }
             this.status = 2;
             this.wordIndex++;
-            if (this.wordIndex >= words.length)
+            if (this.wordIndex >= words.length){
                 this.endGame(); //GAME OVER! Different strategy for randomized progression
+                return;
+            }
+                
             console.log('Word Index: ', this.wordIndex)
             this.actual = words[this.wordIndex].word;
             this.shuffled = words[this.wordIndex].shuffled;
             this.imagePrefix = words[this.wordIndex].imagePrefix;
+            this.hold = 0;
             this.$refs.txtAnswer.focus();
         },
         startGame: function () {
+            this.hold = 0;
             this.gameOn = 1;
             this.$nextTick(() => this.$refs.txtAnswer.focus()) //sometimes the element is not directly available
             this.start();
         },
         endGame: function () {
             this.stop();
+            this.status = 1;
             this.wordIndex = 0;
             var existingScores = JSON.parse(localStorage.getItem("highestScores"));
             if (existingScores == null)
                 existingScores = [];
-            this.playerScore =  Math.floor((this.playerScore * 500) / this.playDuration);
+            this.playerScore =  Math.floor((this.playerScore * 5000) / this.playDuration);
             existingScores.push({ playerName: this.playerName, playerScore: this.playerScore});
             localStorage.setItem('highestScores', JSON.stringify(existingScores));
 
@@ -94,15 +110,27 @@ var app = new Vue({
             if (this.highestScores != null)
                 this.highestScores = _.orderBy(this.highestScores, 'playerScore', 'desc');
 
+            this.gameOver = 1;
+            this.hold = 1;
+            $('.toast').toast('show');
+            setTimeout(() => this.resetGame(), 2600);
+
             
-            this.resetGame();
         },
         resetGame: function () {
             //Save playerName
+            this.gameOver = 0;
             this.gameOn = 0;
             this.wordIndex = 0;
             this.playerName = '';
             this.answer = '';
+            this.playerScore = 0;
+            this.playDuration = 0;
+            this.actual = words[0].word;
+            this.shuffled = words[0].shuffled;
+            this.imagePrefix = 'HH';
+            this.hold = 1;
+            this.status = 2;
             this.$nextTick(() => this.$refs.txtName.focus()) //sometimes the element is not directly available
             this.reset();
         },
